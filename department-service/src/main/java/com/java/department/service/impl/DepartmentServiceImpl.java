@@ -1,6 +1,7 @@
 package com.java.department.service.impl;
 
 import com.java.department.dto.DepartmentDto;
+import com.java.department.exception.ResourceNotFoundException;
 import com.java.department.repository.DepartmentRepository;
 import com.java.department.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto getDepartmentByCode(String departmentCode) {
         var departmentEntity = departmentRepository.findByDepartmentCode(departmentCode)
-                                                   .orElseThrow(() -> new RuntimeException("Department not found"));
+                                                   .orElseThrow(() -> new ResourceNotFoundException(
+                                                           "Department",
+                                                           "id",
+                                                           departmentCode
+                                                   ));
 
         return DEPARTMENT_MAPPER.toDepartmentDto(departmentEntity);
     }

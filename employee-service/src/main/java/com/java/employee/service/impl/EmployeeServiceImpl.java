@@ -1,6 +1,8 @@
 package com.java.employee.service.impl;
 
 import com.java.employee.dto.EmployeeDto;
+import com.java.employee.exception.EmailAlreadyExistsException;
+import com.java.employee.exception.ResourceNotFoundException;
 import com.java.employee.repository.EmployeeRepository;
 import com.java.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
+        var existingEmployee = employeeRepository.findByEmail(employeeDto.email());
+
+        if (existingEmployee.isPresent()) {
+            throw new EmailAlreadyExistsException("Email already exists for the employee");
+        }
+
         // Convert DTO to Entity
         var employeeEntity = EMPLOYEE_MAPPER.toEmployeeEntity(employeeDto);
 
@@ -27,7 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getEmployeeById(Long employeeId) {
         var employeeEntity = employeeRepository.findById(employeeId)
-                                               .orElseThrow(() -> new RuntimeException("Employee not found"));
+                                               .orElseThrow(() -> new ResourceNotFoundException(
+                                                               "Employee",
+                                                               "id",
+                                                               employeeId
+                                                       )
+                                               );
 
         return EMPLOYEE_MAPPER.toEmployeeDto(employeeEntity);
     }
