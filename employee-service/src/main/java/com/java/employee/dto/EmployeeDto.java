@@ -11,6 +11,7 @@ public record EmployeeDto(
         String lastName,
         @NotNull(message = "Employee Email cannot be null")
         @Email(message = "Employee Email should be valid")
-        String email
+        String email,
+        String departmentCode
 ) {
 }

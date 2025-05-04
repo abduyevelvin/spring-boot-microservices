@@ -32,6 +32,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                              .body(errorDetails);
     }
 
+    @ExceptionHandler(DepartmentAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetails> handleEmailAlreadyExistsException(DepartmentAlreadyExistsException ex,
+                                                                          WebRequest request) {
+        var errorDetails = new ErrorDetails(
+                now(),
+                ex.getMessage(),
+                request.getDescription(false),
+                "DEPARTMENT_ALREADY_EXISTS"
+        );
+
+        return ResponseEntity.status(CONFLICT)
+                             .body(errorDetails);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDetails> handleGlobalException(Exception ex,
                                                               WebRequest request) {

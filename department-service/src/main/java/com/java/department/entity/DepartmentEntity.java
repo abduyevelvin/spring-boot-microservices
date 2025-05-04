@@ -19,6 +19,6 @@ public class DepartmentEntity {
     private String departmentName;
     @Column(nullable = false)
     private String departmentDescription;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String departmentCode;
 }

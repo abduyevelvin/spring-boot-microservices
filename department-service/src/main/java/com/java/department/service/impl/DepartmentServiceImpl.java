@@ -1,6 +1,7 @@
 package com.java.department.service.impl;
 
 import com.java.department.dto.DepartmentDto;
+import com.java.department.exception.DepartmentAlreadyExistsException;
 import com.java.department.exception.ResourceNotFoundException;
 import com.java.department.repository.DepartmentRepository;
 import com.java.department.service.DepartmentService;
@@ -17,6 +18,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto saveDepartment(DepartmentDto departmentDto) {
+        var existingDepartment = departmentRepository.findByDepartmentCode(departmentDto.departmentCode());
+
+        if (existingDepartment.isPresent()) {
+            throw new DepartmentAlreadyExistsException(
+                    "Department with code " + departmentDto.departmentCode() + " already exists"
+            );
+        }
+
         // Convert DTO to Entity
         var departmentEntity = DEPARTMENT_MAPPER.toDepartmentEntity(departmentDto);
 
