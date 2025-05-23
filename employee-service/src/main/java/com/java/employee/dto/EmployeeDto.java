@@ -12,6 +12,9 @@ public record EmployeeDto(
         @NotNull(message = "Employee Email cannot be null")
         @Email(message = "Employee Email should be valid")
         String email,
-        String departmentCode
+        @NotNull(message = "Department Code cannot be null")
+        String departmentCode,
+        @NotNull(message = "Organization Code cannot be null")
+        String organizationCode
 ) {
 }

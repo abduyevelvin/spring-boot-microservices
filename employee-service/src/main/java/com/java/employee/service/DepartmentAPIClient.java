@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "DEPARTMENT-SERVICE", configuration = FeignConfig.class)
-public interface APIClient {
+public interface DepartmentAPIClient {
 
     // This is a Feign client that communicates with the Department Service to fetch department details
     @GetMapping("departments/{code}")

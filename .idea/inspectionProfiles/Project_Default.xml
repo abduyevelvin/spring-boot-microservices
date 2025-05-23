@@ -22,6 +22,9 @@
           <option value="config-server" />
           <option value="config-server" />
           <option value="config-server" />
+          <option value="organization-service" />
+          <option value="organization-service" />
+          <option value="organization-service" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -43,10 +46,16 @@
           <option value="com.thoughtworks.xstream:xstream:1.4.20" />
           <option value="net.i2p.crypto:eddsa:0.3.0" />
           <option value="org.xmlunit:xmlunit-core:2.9.1" />
+          <option value="org.xmlunit:xmlunit-core:2.9.1" />
+          <option value="com.thoughtworks.xstream:xstream:1.4.20" />
+          <option value="org.apache.httpcomponents:httpclient:4.5.3" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />

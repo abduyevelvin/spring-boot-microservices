@@ -3,12 +3,13 @@ package com.java.employee.service.impl;
 import com.java.employee.dto.APIResponseDto;
 import com.java.employee.dto.DepartmentDto;
 import com.java.employee.dto.EmployeeDto;
+import com.java.employee.dto.OrganizationDto;
 import com.java.employee.exception.EmailAlreadyExistsException;
 import com.java.employee.exception.ResourceNotFoundException;
 import com.java.employee.repository.EmployeeRepository;
-import com.java.employee.service.APIClient;
+import com.java.employee.service.DepartmentAPIClient;
 import com.java.employee.service.EmployeeService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import com.java.employee.service.OrganizationAPIClient;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //private final RestTemplate restTemplate;
     //private final WebClient webClient;
-    private final APIClient apiClient;
+    private final DepartmentAPIClient departmentAPIClient;
+    private final OrganizationAPIClient organizationAPIClient;
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -70,11 +72,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 //                                     .bodyToMono(DepartmentDto.class)
 //                                     .block();
 
-        var departmentDto = apiClient.getDepartmentByCode(employeeEntity.getDepartmentCode());
+        var departmentDto = departmentAPIClient.getDepartmentByCode(employeeEntity.getDepartmentCode());
+
+        var organizationDto = organizationAPIClient.getOrganizationByCode(employeeEntity.getOrganizationCode());
 
         var employeeDto = EMPLOYEE_MAPPER.toEmployeeDto(employeeEntity);
 
-        return new APIResponseDto(employeeDto, departmentDto);
+        return new APIResponseDto(employeeDto, departmentDto, organizationDto);
     }
 
     public APIResponseDto getDefaultDepartment(Long employeeId, Throwable throwable) {
@@ -95,8 +99,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                 "RD001"
         );
 
+        var organizationDto = new OrganizationDto(
+                0L,
+                "Default Organization",
+                "Default Organization Description",
+                "ORG001",
+                null
+        );
+
         var employeeDto = EMPLOYEE_MAPPER.toEmployeeDto(employeeEntity);
 
-        return new APIResponseDto(employeeDto, departmentDto);
+        return new APIResponseDto(employeeDto, departmentDto, organizationDto);
     }
 }

@@ -23,4 +23,6 @@ public class EmployeeEntity {
     private String email;
     @Column(nullable = false)
     private String departmentCode;
+    @Column(nullable = false)
+    private String organizationCode;
 }
