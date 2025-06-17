@@ -1,8 +1,33 @@
 package com.example.organization;
 
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@OpenAPIDefinition(
+		info = @Info(
+				title = "Organization Service API",
+				version = "1.0",
+				description = "API for managing organizations",
+				contact = @Contact(
+						name = "Support Team",
+						email = "test@test.com",
+						url = "https://example.com/support"
+				),
+				license = @License(
+						name = "Apache License 2.0",
+						url = "https://www.apache.org/licenses/LICENSE-2.0"
+				)
+		),
+		externalDocs = @ExternalDocumentation(
+				description = "Organization Service Documentation",
+				url = "https://example.com/organization-service-docs"
+		)
+)
 @SpringBootApplication
 public class OrganizationServiceApplication {
 
